@@ -1,0 +1,29 @@
+name: Push Build
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-2022
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3
+      with:
+        path: source
+        fetch-depth: 0
+
+    - name: Build
+      shell: bash
+      run: |
+        source/ci/setup-win32-build.sh
+        mkdir build && cd build
+        ../source/ci/build.sh
+
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: exe
+        path: source/build/git2.exe
