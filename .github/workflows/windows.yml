@@ -26,4 +26,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: exe
-        path: build/git2.exe
+        path: build/Release/git2.exe
