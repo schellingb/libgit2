@@ -14,6 +14,7 @@ jobs:
     - name: Build
       shell: bash
       run: |
+        rm -rf x64/tests #remove tests directory which contains symbolic link that can't be copied with cp
         cp -r x64 x86
         cd x64
         cmake -A x64 -D DEPRECATE_HARD=ON -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x64" .
