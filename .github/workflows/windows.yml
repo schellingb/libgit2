@@ -10,24 +10,33 @@ jobs:
       uses: actions/checkout@v3
       with: 
         fetch-depth: 1
-        path: source
     - name: Build
       shell: bash
       run: |
-        cd source
+        cmake -A x64 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x64" .
+        cmake --build . --config Release
         cmake -A x64 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x64-dbg" .
         cmake --build . --config Debug
-        mv Debug ..
-        pwd
-        ls -al ../Debug
+        cmake -A x86 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86" .
+        cmake --build . --config Release
+        cmake -A x86 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86-dbg" .
+        cmake --build . --config Debug
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: dlls
         path: |
+          Debug/libgit2-x64.dll
           Debug/libgit2-x64-dbg.dll
           Debug/libgit2-x64-dbg.pdb
+          Debug/libgit2-x86.dll
+          Debug/libgit2-x86-dbg.dll
+          Debug/libgit2-x86-dbg.pdb
 
+#        mv Debug ..
+#        pwd
+#        ls -al ../Debug
+#        path: source
 #on: 
 #        cd source
 #        cmake -A x86 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86-dbg" .
