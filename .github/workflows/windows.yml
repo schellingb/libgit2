@@ -1,4 +1,4 @@
-name: Manual Build
+name: Push Build
 
 on: push
 
@@ -14,11 +14,8 @@ jobs:
     - name: Build
       shell: bash
       run: |
-#        cd source
         cmake -A x64 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x64-dbg" .
         cmake --build . --config Debug
-#        cmake -A x86 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86-dbg" .
-#        cmake --build . --config Debug
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
@@ -26,5 +23,10 @@ jobs:
         path: |
           Debug/libgit2-x64-dbg.dll
           Debug/libgit2-x64-dbg.pdb
+
+#on: workflow_dispatch
+#        cd source
+#        cmake -A x86 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86-dbg" .
+#        cmake --build . --config Debug
 #          Release/libgit2-x86-dbg.dll
 #          Release/libgit2-x86-dbg.pdb
