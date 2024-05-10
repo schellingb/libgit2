@@ -13,10 +13,11 @@ if(MSVC)
 	# /Gd - explicitly set cdecl calling convention
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Gd")
 
-	if(NOT (MSVC_VERSION LESS 1900))
-		# /guard:cf - Enable Control Flow Guard
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /guard:cf")
-	endif()
+	# disable guard cf (CUSTOMIZED FROM ORIGINAL libgit2!)
+	#if(NOT (MSVC_VERSION LESS 1900))
+	#	# /guard:cf - Enable Control Flow Guard
+	#	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /guard:cf")
+	#endif()
 
 	if(STATIC_CRT)
 		set(CRT_FLAG_DEBUG "/MTd")
@@ -47,13 +48,14 @@ if(MSVC)
 	# /Oy - Enable frame pointer omission (FPO) (otherwise CMake will automatically turn it off)
 	# /GL - Link time code generation (whole program optimization)
 	# /Gy - Function-level linking
-	set(CMAKE_C_FLAGS_RELEASE "/DNDEBUG /O2 /Oy /GL /Gy ${CRT_FLAG_RELEASE}")
+	# /Gw - Optimize Global Data (CUSTOMIZED FROM ORIGINAL libgit2!)
+	set(CMAKE_C_FLAGS_RELEASE "/DNDEBUG /O2 /Oy /GL /Gy /Gw w${CRT_FLAG_RELEASE}")
 
 	# /Oy- - Disable frame pointer omission (FPO)
-	set(CMAKE_C_FLAGS_RELWITHDEBINFO "/DNDEBUG /Zi /O2 /Oy- /GL /Gy ${CRT_FLAG_RELEASE}")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO "/DNDEBUG /Zi /O2 /Oy- /GL /Gy /Gw w${CRT_FLAG_RELEASE}")
 
 	# /O1 - Optimize for size
-	set(CMAKE_C_FLAGS_MINSIZEREL "/DNDEBUG /O1 /Oy /GL /Gy ${CRT_FLAG_RELEASE}")
+	set(CMAKE_C_FLAGS_MINSIZEREL "/DNDEBUG /O1 /Oy /GL /Gy /Gw w${CRT_FLAG_RELEASE}")
 
 	# /IGNORE:4221 - Ignore empty compilation units
 	set(CMAKE_STATIC_LINKER_FLAGS "/IGNORE:4221")
