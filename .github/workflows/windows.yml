@@ -21,7 +21,7 @@ jobs:
         pwd
         ls -al ../Debug
     - name: Upload artifact
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
         name: dlls
         path: |
