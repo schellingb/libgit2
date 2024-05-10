@@ -472,6 +472,11 @@ int git_smart__negotiate_fetch(
 			if (GIT_ITEROVER == error)
 				break;
 
+			/* (CUSTOMIZED FROM ORIGINAL libgit2!) also continue on NOTFOUND error which can be
+ 			* non-fatal when fetching remote changes into a shallow cloned local repository. */
+			if (GIT_ENOTFOUND == error)
+				break;
+
 			goto on_error;
 		}
 
