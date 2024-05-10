@@ -1,7 +1,6 @@
 name: Manual Build
 
-#on: push
-on: workflow_dispatch
+on: [push,workflow_dispatch]
 
 jobs:
   build:
@@ -10,20 +9,22 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v3
       with:
-        path: source
+#        path: source
         fetch-depth: 1
     - name: Build
       shell: bash
       run: |
-        cd source
-        cmake -A x64 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x64" .
-        cmake --build . --config Release
-#        cmake -A x86 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86" .
-#        cmake --build . --config Release
+#        cd source
+        cmake -A x64 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x64-dbg" .
+        cmake --build . --config Debug
+#        cmake -A x86 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86-dbg" .
+#        cmake --build . --config Debug
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
         name: dlls
         path: |
-          build/Release/libgit2-x64.dll
-#          build/Release/libgit2-x86.dll
+          Debug/libgit2-x64-dbg.dll
+          Debug/libgit2-x64-dbg.pdb
+#          Release/libgit2-x86-dbg.dll
+#          Release/libgit2-x86-dbg.pdb
