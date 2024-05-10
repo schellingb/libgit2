@@ -1,6 +1,7 @@
 name: Manual Build
 
-on: [ push, workflow_dispatch ]
+on: push
+#on: workflow_dispatch
 
 jobs:
   build:
