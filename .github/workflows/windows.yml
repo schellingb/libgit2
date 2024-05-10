@@ -8,25 +8,22 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+      with: { fetch-depth: 1 }
     - name: Build
       shell: bash
       run: |
         cmake -A x64 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x64-dbg" .
         cmake --build . --config Debug
+        pwd
+        ls -al  Debug
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
         name: dlls
         path: |
-          Debug/libgit2-x64-dbg.dll
           Debug/libgit2-x64-dbg.pdb
 
-#      with:
-#        path: source
-#        fetch-depth: 0
-
+#          Debug/libgit2-x64-dbg.dll
 #on: 
 #        cd source
 #        cmake -A x86 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86-dbg" .
