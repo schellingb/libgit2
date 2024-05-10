@@ -17,7 +17,7 @@ jobs:
         cmake --build . --config Release
         cmake -A x64 -D DEPRECATE_HARD=ON -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x64-dbg" .
         cmake --build . --config Debug
-        rf -rf CMakeCache.txt CMakeFiles
+        rm -rf CMakeCache.txt CMakeFiles
         cmake -A x86 -D DEPRECATE_HARD=ON -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86" .
         cmake --build . --config Release
         cmake -A x86 -D DEPRECATE_HARD=ON -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86-dbg" .
