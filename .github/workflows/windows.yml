@@ -1,6 +1,6 @@
-name: Push Build
+name: Windows DLLs
 
-on: push
+on: [push, workflow_dispatch]
 
 jobs:
   build:
@@ -9,7 +9,6 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v3
       with:
-        path: source
         fetch-depth: 0
     - name: Build
       shell: bash
@@ -24,7 +23,11 @@ jobs:
           Debug/libgit2-x64-dbg.dll
           Debug/libgit2-x64-dbg.pdb
 
-#on: workflow_dispatch
+#      with:
+#        path: source
+#        fetch-depth: 0
+
+#on: 
 #        cd source
 #        cmake -A x86 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86-dbg" .
 #        cmake --build . --config Debug
