@@ -16,18 +16,18 @@ jobs:
       run: |
         cd source
         cmake -A x64 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x64-dbg" .
-        cd ..
         cmake --build source --config Debug
+        mv Debug ..
         pwd
-        ls -al Debug
+        ls -al ../Debug
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
         name: dlls
         path: |
+          Debug/libgit2-x64-dbg.dll
           Debug/libgit2-x64-dbg.pdb
 
-#          Debug/libgit2-x64-dbg.dll
 #on: 
 #        cd source
 #        cmake -A x86 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x86-dbg" .
