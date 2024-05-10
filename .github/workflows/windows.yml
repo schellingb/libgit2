@@ -16,7 +16,7 @@ jobs:
       run: |
         cd source
         cmake -A x64 -D USE_SSH=OFF -D USE_HTTPS=WinHTTP -D "BUILD_TESTS=OFF" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=libgit2-x64-dbg" .
-        cmake --build source --config Debug
+        cmake --build . --config Debug
         mv Debug ..
         pwd
         ls -al ../Debug
