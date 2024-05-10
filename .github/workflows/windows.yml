@@ -1,6 +1,6 @@
 name: Manual Build
 
-on: [push,workflow_dispatch]
+on: [ push, workflow_dispatch ]
 
 jobs:
   build:
@@ -9,7 +9,7 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v3
       with:
-        path: .
+        path: source
         fetch-depth: 1
     - name: Build
       shell: bash
